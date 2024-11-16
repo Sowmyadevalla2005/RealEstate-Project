@@ -6,9 +6,11 @@ import OAuth from '../components/OAuth';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
+  const [isSignUp, setIsSignUp] = useState(false); // State to toggle between Sign In and Sign Up forms
   const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleChange = (e) => { // e for event
     setFormData(
       {
@@ -17,6 +19,7 @@ export default function SignIn() {
       }
     );
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // To prevent refreshing the page when we submit the form
     try {
@@ -41,6 +44,11 @@ export default function SignIn() {
       dispatch(signInFailure(error.message));
     }   
   };
+
+  const handleToggle = () => {
+    setIsSignUp(!isSignUp);
+  };
+
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold my-7 text-slate-700'> Sign In </h1>
