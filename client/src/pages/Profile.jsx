@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'; // Import dispatch from Redux
 import { useState, useRef, useEffect } from 'react'; // Import useState and useEffect hooks
 import { deleteUserFailure, deleteUserStart, deleteUserSuccess, signOutUserFailure, signOutUserStart, signOutUserSuccess } from '../redux/user/userSlice';
+import {Link} from 'react-router-dom';
 
 export default function Profile() {
   const dispatch = useDispatch(); // Dispatch action
@@ -60,7 +61,8 @@ export default function Profile() {
         <input type='text' placeholder='username' defaultValue={currentUser.username} className='border p-3 rounded-lg' id='username' />
         <input type='email' placeholder='email' defaultValue={currentUser.email} className='border p-3 rounded-lg' id='email' />
         <input type='text' placeholder='password' className='border p-3 rounded-lg' id='password' />
-        <button className='bg-slate-700 text-white rounded-lg p-3 uppercase'> update </button>
+        <button className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95'> update </button>
+        <Link to={"/create-listing"} className='bg-slate-700 text-white rounded-lg p-3 uppercase text-center hover:opacity-95'> Create Listing </Link>
       </form>
 
       <div className='flex justify-between mt-5'>
