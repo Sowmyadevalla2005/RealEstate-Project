@@ -47,13 +47,31 @@ export default function CreateListing() {
     const filesArray = Array.from(e.target.files);
     setFiles(filesArray);
   
-    // Simulate image upload and update imageUrls in formData
-    const uploadedUrls = await uploadImages(filesArray);
-    setFormData((prev) => ({
-      ...prev,
-      imageUrls: uploadedUrls,
-    }));
-  };  
+    const formData = new FormData();
+    filesArray.forEach((file) => {
+      formData.append('images', file); // 'images' is the key expected by backend
+    });
+  
+    try {
+      const res = await fetch('/api/listing/upload', {  // Update with the correct route for your backend
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (res.ok) {
+        const data = await res.json();
+        setFormData((prev) => ({
+          ...prev,
+          imageUrls: data.urls,  // Assuming the backend returns an array of image URLs
+        }));
+      } else {
+        throw new Error('Image upload failed');
+      }
+    } catch (error) {
+      setError('Error uploading images');
+      console.error(error);
+    }
+  };   
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -273,6 +291,7 @@ export default function CreateListing() {
             />
             <button
               type='button'
+              onClick={() => handleImageUpload({target: {files}})}
               className='p-3 border border-slate-700 rounded uppercase hover:shadow-lg disabled:opacity-80'
               disabled={files.length === 0}
             >

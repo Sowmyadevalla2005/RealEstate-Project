@@ -1,5 +1,11 @@
 import Listing from '../models/listing.model.js';
 import { errorHandler } from '../utils/error.js';
+import express from 'express';
+import multer from 'multer';
+import fs from 'fs';
+import path from 'path';
+
+const upload = multer({ dest: 'uploads/' });
 
 export const createListing = async (req, res, next) => {
   try {
@@ -66,3 +72,16 @@ export const getListing = async (req, res, next) => {
     next(error);
   }
 }
+
+export const uploadImages = async (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ success: false, message: 'No images uploaded' });
+    }
+
+    const imageUrls = req.files.map((file) => `/uploads/${file.filename}`);
+    res.json({ success: true, urls: imageUrls });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
