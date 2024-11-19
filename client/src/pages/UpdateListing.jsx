@@ -28,14 +28,18 @@ export default function CreateListing() {
       const listingId = params.listingId;
       const res = await fetch(`/api/listing/get/${listingId}`);
       const data = await res.json();
-      if(data.success === false) {
+      if (data.success === false) {
         console.log(data.message);
         return;
       }
-      setFormData(data);
+      // Assuming the API returns an object with imageUrls
+      setFormData({
+        ...data,
+        imageUrls: data.imageUrls || [], // Ensure imageUrls are properly set
+      });
     };
     fetchListing();
-  }, []);
+  }, [params.listingId]);
 
   const handleChange = (e) => {
     if (e.target.id === 'sale' || e.target.id === 'rent') {
@@ -64,7 +68,6 @@ export default function CreateListing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Check if currentUser is available
     if (!currentUser || !currentUser._id) {
       setError('User not logged in or invalid user data.');
       return;
@@ -72,17 +75,26 @@ export default function CreateListing() {
   
     try {
       setLoading(true);
-      setError(false);
+      setError('');
   
+      // Prepare the form data to include both the listing data and images
+      const formDataToSubmit = new FormData();
+  
+      // Append regular form data
+      formDataToSubmit.append('userRef', currentUser._id);
+      formDataToSubmit.append('formData', JSON.stringify(formData)); // Assuming `formData` is an object
+  
+      // If there are files, append them to FormData
+      if (files.length > 0) {
+        files.forEach((file) => {
+          formDataToSubmit.append('images', file); // 'images' is the field name used in backend
+        });
+      }
+  
+      // Send the request to upload and update listing
       const res = await fetch(`/api/listing/update/${params.listingId}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          userRef: currentUser._id,  // Ensure the userRef is correctly added
-        }),
+        body: formDataToSubmit, // Send FormData directly
       });
   
       const data = await res.json();
@@ -90,6 +102,8 @@ export default function CreateListing() {
   
       if (data.success === false) {
         setError(data.message);
+      } else {
+        // Handle successful response, if needed
       }
     } catch (error) {
       setError(error.message);
@@ -99,15 +113,13 @@ export default function CreateListing() {
   
 
   const uploadImages = (files) => {
-    // Placeholder for image upload logic
     return new Promise((resolve) => {
-      // Simulate uploading the images and returning URLs
       setTimeout(() => {
-        const uploadedUrls = files.map((file, index) => `/uploads/${file.name}`); // Example URL format
-        resolve(uploadedUrls);
+        const uploadedUrls = files.map((file) => `/uploads/${file.name}`); // Make sure the path is correct
+        resolve(uploadedUrls); // Return the uploaded image URLs
       }, 2000);
     });
-  };
+  };  
 
   return (
     <main className='p-3 max-w-4xl mx-auto'>
@@ -278,6 +290,23 @@ export default function CreateListing() {
               Upload
             </button>
           </div>
+          {formData.imageUrls.length > 0 && (
+            <div className="flex gap-4 mt-4 flex-col">
+              {formData.imageUrls.map((url, index) => (
+                <div key={index} className="relative">
+                  <img
+                    src={url}
+                    alt={`Image ${index + 1}`}
+                    className="w-10 h-10 object-cover rounded-full border-2 border-gray-300"
+                  />
+                  <span className="absolute bottom-0 right-0 bg-gray-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {index + 1}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+
           <button
             className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
             disabled={loading}
