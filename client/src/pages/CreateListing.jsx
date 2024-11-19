@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function CreateListing() {
-  const currentUser = useSelector(state => state.user);
+  const currentUser = useSelector(state => state.user.currentUser);
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
@@ -22,6 +22,7 @@ export default function CreateListing() {
   const [loading, setLoading] = useState(false);
 
   console.log(formData);
+  console.log('Fixed Current user:', currentUser);
 
   const handleChange = (e) => {
     if (e.target.id === 'sale' || e.target.id === 'rent') {
@@ -42,47 +43,61 @@ export default function CreateListing() {
     }
   };
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const filesArray = Array.from(e.target.files);
     setFiles(filesArray);
-  };
+  
+    // Simulate image upload and update imageUrls in formData
+    const uploadedUrls = await uploadImages(filesArray);
+    setFormData((prev) => ({
+      ...prev,
+      imageUrls: uploadedUrls,
+    }));
+  };  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Check if currentUser is available
     if (!currentUser || !currentUser._id) {
+      console.error('User not logged in or invalid user data.');
       setError('User not logged in or invalid user data.');
       return;
     }
   
+    const dataToSubmit = {
+      ...formData,
+      userRef: currentUser._id, // Attach user ID from currentUser
+    };
+  
+    console.log('Submitting data:', dataToSubmit);
+  
     try {
       setLoading(true);
-      setError(false);
+      setError('');
   
       const res = await fetch('/api/listing/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          userRef: currentUser._id,  // Ensure the userRef is correctly added
-        }),
+        body: JSON.stringify(dataToSubmit),
       });
   
       const data = await res.json();
       setLoading(false);
   
-      if (data.success === false) {
+      if (!data.success) {
         setError(data.message);
+        return;
       }
+  
+      console.log('Listing created successfully:', data);
     } catch (error) {
+      console.error('Error submitting listing:', error);
       setError(error.message);
       setLoading(false);
     }
-  };
-  
+  };  
 
   const uploadImages = (files) => {
     // Placeholder for image upload logic
