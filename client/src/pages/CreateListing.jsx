@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function CreateListing() {
-  const currentUser = useSelector(state => state.user.currentUser);
+  const currentUser = useSelector((state) => state.user.currentUser);
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
@@ -21,21 +21,20 @@ export default function CreateListing() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  console.log(formData);
-  console.log('Fixed Current user:', currentUser);
-
   const handleChange = (e) => {
     if (e.target.id === 'sale' || e.target.id === 'rent') {
       setFormData({
         ...formData,
-        type: e.target.id
+        type: e.target.id,
       });
-    } else if (e.target.id === 'parking' || e.target.id === 'furnished' || e.target.id === 'offer') {
+    } else if (['parking', 'furnished', 'offer'].includes(e.target.id)) {
       setFormData({
         ...formData,
-        [e.target.id]: e.target.checked
+        [e.target.id]: e.target.checked,
       });
-    } else if (e.target.type === 'number' || e.target.type === 'text' || e.target.type === 'textarea') {
+    } else if (
+      ['number', 'text', 'textarea'].includes(e.target.type)
+    ) {
       setFormData({
         ...formData,
         [e.target.id]: e.target.value,
@@ -46,23 +45,23 @@ export default function CreateListing() {
   const handleImageUpload = async (e) => {
     const filesArray = Array.from(e.target.files);
     setFiles(filesArray);
-  
+
     const formData = new FormData();
     filesArray.forEach((file) => {
-      formData.append('images', file); // 'images' is the key expected by backend
+      formData.append('images', file);
     });
-  
+
     try {
-      const res = await fetch('/api/listing/upload', {  // Update with the correct route for your backend
+      const res = await fetch('/api/listing/upload', {
         method: 'POST',
         body: formData,
       });
-  
+
       if (res.ok) {
         const data = await res.json();
         setFormData((prev) => ({
           ...prev,
-          imageUrls: data.urls,  // Assuming the backend returns an array of image URLs
+          imageUrls: data.urls,
         }));
       } else {
         throw new Error('Image upload failed');
@@ -71,28 +70,25 @@ export default function CreateListing() {
       setError('Error uploading images');
       console.error(error);
     }
-  };   
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!currentUser || !currentUser._id) {
-      console.error('User not logged in or invalid user data.');
       setError('User not logged in or invalid user data.');
       return;
     }
-  
+
     const dataToSubmit = {
       ...formData,
-      userRef: currentUser._id, // Attach user ID from currentUser
+      userRef: currentUser._id,
     };
-  
-    console.log('Submitting data:', dataToSubmit);
-  
+
     try {
       setLoading(true);
       setError('');
-  
+
       const res = await fetch('/api/listing/create', {
         method: 'POST',
         headers: {
@@ -100,39 +96,25 @@ export default function CreateListing() {
         },
         body: JSON.stringify(dataToSubmit),
       });
-  
+
       const data = await res.json();
       setLoading(false);
-  
+
       if (!data.success) {
         setError(data.message);
         return;
       }
-  
+
       console.log('Listing created successfully:', data);
     } catch (error) {
-      console.error('Error submitting listing:', error);
       setError(error.message);
       setLoading(false);
     }
-  };  
-
-  const uploadImages = (files) => {
-    // Placeholder for image upload logic
-    return new Promise((resolve) => {
-      // Simulate uploading the images and returning URLs
-      setTimeout(() => {
-        const uploadedUrls = files.map((file, index) => `/uploads/${file.name}`); // Example URL format
-        resolve(uploadedUrls);
-      }, 2000);
-    });
   };
 
   return (
     <main className='p-3 max-w-4xl mx-auto'>
-      <h1 className='text-3xl font-semibold text-center my-7'>
-        Create a Listing
-      </h1>
+      <h1 className='text-3xl font-semibold text-center my-7'>Create a Listing</h1>
       <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-6'>
         <div className='flex flex-col gap-4 flex-1'>
           <input
@@ -255,43 +237,50 @@ export default function CreateListing() {
               />
               <div className='flex flex-col items-center'>
                 <p>Regular price</p>
-                <span className='text-xs'>($ / month)</span>
+                {formData.type === 'rent' && <span className='text-xs'>($ / month)</span>}
               </div>
             </div>
-            <div className='flex items-center gap-2'>
-              <input
-                type='number'
-                id='discountPrice'
-                min='50'
-                max='10000000'
-                required
-                className='p-3 border border-gray-300 rounded-lg'
-                onChange={handleChange}
-                value={formData.discountPrice}
-              />
-              <div className='flex flex-col items-center'>
-                <p>Discounted price</p>
-                <span className='text-xs'>($ / month)</span>
+            {formData.offer && (
+              <div className='flex items-center gap-2'>
+                <input
+                  type='number'
+                  id='discountPrice'
+                  min='0'
+                  max='10000000'
+                  required
+                  className='p-3 border border-gray-300 rounded-lg'
+                  onChange={handleChange}
+                  value={formData.discountPrice}
+                />
+                <div className='flex flex-col items-center'>
+                  <p>Discounted price</p>
+                  {formData.type === 'rent' && (
+                    <span className='text-xs'>($ / month)</span>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
-        <div className="flex flex-col flex-1 gap-4">
-          <p className='font-semibold'>Images:
-            <span className='font-normal text-gray-600 ml-2'>The first image will be the cover (max 6)</span>
+        <div className='flex flex-col flex-1 gap-4'>
+          <p className='font-semibold'>
+            Images:
+            <span className='font-normal text-gray-600 ml-2'>
+              The first image will be the cover (max 6)
+            </span>
           </p>
-          <div className="flex gap-4">
+          <div className='flex gap-4'>
             <input
               onChange={handleImageUpload}
               className='p-3 border border-gray-300 rounded w-full'
-              type="file"
+              type='file'
               id='images'
               accept='image/*'
               multiple
             />
             <button
               type='button'
-              onClick={() => handleImageUpload({target: {files}})}
+              onClick={() => handleImageUpload({ target: { files } })}
               className='p-3 border border-slate-700 rounded uppercase hover:shadow-lg disabled:opacity-80'
               disabled={files.length === 0}
             >

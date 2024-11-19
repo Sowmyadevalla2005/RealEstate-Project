@@ -248,68 +248,84 @@ export default function CreateListing() {
               />
               <div className='flex flex-col items-center'>
                 <p>Regular price</p>
-                <span className='text-xs'>($ / month)</span>
+                {formData.type === 'rent' && (
+                  <span className='text-xs'>($ / month)</span>
+                )}
               </div>
             </div>
-            <div className='flex items-center gap-2'>
-              <input
-                type='number'
-                id='discountPrice'
-                min='50'
-                max='10000000'
-                required
-                className='p-3 border border-gray-300 rounded-lg'
-                onChange={handleChange}
-                value={formData.discountPrice}
-              />
-              <div className='flex flex-col items-center'>
-                <p>Discounted price</p>
-                <span className='text-xs'>($ / month)</span>
+            {formData.offer && (
+              <div className='flex items-center gap-2'>
+                <input
+                  type='number'
+                  id='discountPrice'
+                  min='0'
+                  max='10000000'
+                  required
+                  className='p-3 border border-gray-300 rounded-lg'
+                  onChange={handleChange}
+                  value={formData.discountPrice}
+                />
+                <div className='flex flex-col items-center'>
+                  <p>Discounted price</p>
+                  {formData.type === 'rent' && (
+                    <span className='text-xs'>($ / month)</span>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
-        <div className="flex flex-col flex-1 gap-4">
-          <p className='font-semibold'>Images:
-            <span className='font-normal text-gray-600 ml-2'>The first image will be the cover (max 6)</span>
+        <div className='flex flex-col flex-1 gap-4'>
+          <p className='font-semibold'>
+            Images:
+            <span className='font-normal text-gray-600 ml-2'>
+              The first image will be the cover (max 6)
+            </span>
           </p>
-          <div className="flex gap-4">
+          <div className='flex gap-4'>
             <input
-              onChange={handleImageUpload}
+              onChange={(e) => setFiles(e.target.files)}
               className='p-3 border border-gray-300 rounded w-full'
-              type="file"
+              type='file'
               id='images'
               accept='image/*'
               multiple
             />
             <button
               type='button'
-              className='p-3 border border-slate-700 rounded uppercase hover:shadow-lg disabled:opacity-80'
-              disabled={files.length === 0}
+              disabled={uploading}
+              onClick={handleImageSubmit}
+              className='p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80'
             >
-              Upload
+              {uploading ? 'Uploading...' : 'Upload'}
             </button>
           </div>
-          {formData.imageUrls.length > 0 && (
-            <div className="flex gap-4 mt-4 flex-col">
-              {formData.imageUrls.map((url, index) => (
-                <div key={index} className="relative">
-                  <img
-                    src={url}
-                    alt={`Image ${index + 1}`}
-                    className="w-10 h-10 object-cover rounded-full border-2 border-gray-300"
-                  />
-                  <span className="absolute bottom-0 right-0 bg-gray-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {index + 1}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-
+          <p className='text-red-700 text-sm'>
+            {imageUploadError && imageUploadError}
+          </p>
+          {formData.imageUrls.length > 0 &&
+            formData.imageUrls.map((url, index) => (
+              <div
+                key={url}
+                className='flex justify-between p-3 border items-center'
+              >
+                <img
+                  src={url}
+                  alt='listing image'
+                  className='w-20 h-20 object-contain rounded-lg'
+                />
+                <button
+                  type='button'
+                  onClick={() => handleRemoveImage(index)}
+                  className='p-3 text-red-700 rounded-lg uppercase hover:opacity-75'
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
           <button
+            disabled={loading || uploading}
             className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
-            disabled={loading}
           >
             {loading ? 'Creating...' : 'Update listing'}
           </button>
