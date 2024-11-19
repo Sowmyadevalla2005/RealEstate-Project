@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 export default function CreateListing() {
-  const currentUser = useSelector(state => state.user);
+  const currentUser = useSelector(state => state.user.currentUser);
   const params = useParams();
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
