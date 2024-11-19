@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer'; // Import multer
-import { createListing, deleteListing, updateListing, getListing } from '../controllers/listing.controller.js';
+import { createListing, deleteListing, updateListing, getListing, getListings } from '../controllers/listing.controller.js';
 import { verifyToken } from '../utils/verifyUser.js';
 
 // Set up multer storage configuration
@@ -22,6 +22,7 @@ router.post('/create', verifyToken, createListing);
 router.delete('/delete/:id', verifyToken, deleteListing);
 router.post('/update/:id', verifyToken, updateListing);
 router.get('/get/:id', getListing);
+router.get('/get', getListings);
 
 // Route to handle file uploads
 router.post('/upload', upload, (req, res) => {
