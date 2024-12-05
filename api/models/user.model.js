@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        default: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Fprofile-image&psig=AOvVaw1Ggy_OodYRTIH0JUW9qoUH&ust=1731770752200000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCKjmt6TT3okDFQAAAAAdAAAAABAE"
+        default: "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg"
     },
 }, {timestamps: true});
 
