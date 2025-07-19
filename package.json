@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon api/index.js",
-    "start": "node api/index.js"
+    "start": "node api/index.js",
+    "dev-backend": "node api/index.js",
+    "start-all": "concurrently -k \"npm run dev --prefix client\" \"npm run dev-backend\" \"python contextual-chatbot/app_api.py\""
   },
   "keywords": [],
   "author": "",
@@ -17,11 +19,14 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.8.1",
+    "mongoose": "^8.8.3",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "redux-persist": "^6.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
   }
 }

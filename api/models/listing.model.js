@@ -48,7 +48,7 @@ const listingSchema = new mongoose.Schema(
     },
     imageUrls: {
       type: Array,
-      required: true,
+      default: 'https://www.housedigest.com/img/gallery/what-is-the-meaning-of-default-in-real-estate/l-intro-1649683774.jpg',
     },
     userRef: {
       type: String,

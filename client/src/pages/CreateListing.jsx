@@ -14,7 +14,7 @@ export default function CreateListing() {
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
-    imageUrls: [],
+    imageUrls: ['https://i.ibb.co/bLXS93s/The-reserve.jpg', 'https://i.ytimg.com/vi/zumJJUL_ruM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDmuE3PvabgnyNZGEppImDEol7qlw' ],
     name: '',
     description: '',
     address: '',

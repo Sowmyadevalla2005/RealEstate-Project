@@ -4,7 +4,7 @@ import ListingItem from '../components/ListingItem';
 
 export default function Search() {
     const navigate = useNavigate();
-  const [sidebardata, setSidebardata] = useState({
+    const [sidebardata, setSidebardata] = useState({
     searchTerm: '',
     type: 'all',
     parking: false,
