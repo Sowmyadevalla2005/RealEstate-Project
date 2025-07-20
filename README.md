@@ -62,5 +62,8 @@ python app.py
 # Chatbot:  see port in app.py
 
 
-<p align="center">🌟 Find Your Dream Home with RealEstateConnect! 🌟</p>
-<p align="center">Made with ❤️ for your next property adventure</p>
+
+<div align="center">
+  <h3>🌟 Find Your Dream Home with RealEstateConnect! 🌟</h3>
+</div>
+**Made with ❤️ for your next property adventure**
