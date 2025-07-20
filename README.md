@@ -15,10 +15,6 @@
   <a href="https://www.mongodb.com/">
     <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB"/>
   </a>
-  <a href="https://www.python.org/">
-    <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
-  </a>
-</p>
 
 
 ## 📸 Screenshots
@@ -35,28 +31,28 @@
 - 🏘️ **Listings** – Create, edit, delete posts  
 - 🔍 **Search & Filter** – By location, price, type  
 - 💬 **Contact Owners** – In‑app messaging  
-- 🤖 **Chatbot** – Contextual Python support  
-- 📱 **Responsive** – Desktop & mobile ready  
+- 🤖 **Chatbot** – Contextual chat support   
 
 ## 🚀 Quick Start
 
-```bash
-# 1. Clone the repo
-git clone https://github.com/yourusername/RealEstateConnect.git
-cd RealEstateConnect
+1. **Clone the repo**  
+   ```bash
+   git clone https://github.com/yourusername/RealEstateConnect.git
+   cd RealEstateConnect
 
-# 2. Frontend (React)
-cd client
+2. **Start the backend**
+cd api
 npm install
-npm start &
+# create .env with MONGO_URI and JWT_SECRET
+npm start
 
-# 3. Backend (Node/Express)
-cd ../api
+
+3. **Start the frontend**
+cd ../client
 npm install
-# create a .env file with MONGO_URI and JWT_SECRET
-npm start &
+npm start
 
-# 4. Chatbot (Python/Flask)
+4. **Start the chatbot**
 cd ../contextual-chatbot
 pip install -r requirements.txt
 python app.py
@@ -64,4 +60,8 @@ python app.py
 # 5. Open the app
 # Frontend: http://localhost:3000
 # API:      http://localhost:5000
-# Chatbot: see port in app.py
+# Chatbot:  see port in app.py
+
+<div align="center"> <h3>🌟 Find Your Dream Home with RealEstateConnect! 🌟</h3> </div>
+Made with ❤️ for your next property adventure
+
