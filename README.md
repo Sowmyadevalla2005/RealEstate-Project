@@ -35,24 +35,23 @@
 
 ## 🚀 Quick Start
 
-1. **Clone the repo**  
-   ```bash
-   git clone https://github.com/yourusername/RealEstateConnect.git
-   cd RealEstateConnect
+```bash
+# 1. Clone the repo
+git clone https://github.com/yourusername/RealEstateConnect.git
+cd RealEstateConnect
 
-2. **Start the backend**
+# 2. Start the backend
 cd api
 npm install
 # create .env with MONGO_URI and JWT_SECRET
 npm start
 
-
-3. **Start the frontend**
+# 3. Start the frontend
 cd ../client
 npm install
 npm start
 
-4. **Start the chatbot**
+# 4. Start the chatbot
 cd ../contextual-chatbot
 pip install -r requirements.txt
 python app.py
@@ -61,6 +60,7 @@ python app.py
 # Frontend: http://localhost:3000
 # API:      http://localhost:5000
 # Chatbot:  see port in app.py
+
 
 <div align="center"> <h3>🌟 Find Your Dream Home with RealEstateConnect! 🌟</h3> </div>
 Made with ❤️ for your next property adventure
