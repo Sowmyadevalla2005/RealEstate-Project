@@ -22,6 +22,7 @@
 
 <div align="center">
   <img src="screenshots/home.png"   alt="Home Page"       width="300"/>
+  <img src="screenshots/about.png"   alt="About Page"       width="300"/>
   <img src="screenshots/create.png" alt="Create Listing"   width="300"/>
   <img src="screenshots/list.png"   alt="Listing Page"     width="300"/>
 </div>
