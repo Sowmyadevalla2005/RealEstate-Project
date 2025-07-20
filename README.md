@@ -63,6 +63,7 @@ python app.py
 # API:      http://localhost:5000
 # Chatbot: see port in app.py
 
-<p align="center"><strong>🌟 Find Your Dream Home with RealEstateConnect! 🌟</strong></p>
+
+## Find Your Dream Home with RealEstateConnect! 
 
 
