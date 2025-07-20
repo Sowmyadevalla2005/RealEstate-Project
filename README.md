@@ -24,7 +24,6 @@
   <img src="screenshots/home.png"   alt="Home Page"       width="300"/>
   <img src="screenshots/create.png" alt="Create Listing"   width="300"/>
   <img src="screenshots/list.png"   alt="Listing Page"     width="300"/>
-  <img src="screenshots/chat.png"   alt="Chatbot Support"  width="300"/>
 </div>
 
 ## ✨ Features
@@ -45,13 +44,13 @@ cd RealEstateConnect
 # 2. Frontend (React)
 cd client
 npm install
-npm start &
+npm run dev
 
 # 3. Backend (Node/Express)
 cd ../api
 npm install
 # create a .env file with MONGO_URI and JWT_SECRET
-npm start &
+npm run dev
 
 # 4. Chatbot (Python/Flask)
 cd ../contextual-chatbot
