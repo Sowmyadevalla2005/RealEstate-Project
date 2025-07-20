@@ -1,108 +1,55 @@
-﻿# real-estate
+# 🏠 RealEstateConnect
 
-## Project Overview
-A full-stack real estate web application that allows users to browse, list, and manage property listings. Includes authentication, listing management, and a contextual chatbot for user support.
+**A full‑stack real estate platform to browse, list, and manage properties—complete with user auth and contextual chatbot support.**
 
-## Features
-- User authentication (register, login, profile)
-- Create, edit, and delete property listings
-- Browse and search listings
-- Contact property owners
-- Contextual chatbot support
-- Modern React frontend and Node.js/Express backend
+[![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)  
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)  
+[![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)  
+[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)  
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)  
 
-## Screenshots
+## 📸 Screenshots
 
-### Home Page
-![Home Page](screenshots/home.png)
+<div align="center">
+  <img src="screenshots/home.png"   alt="Home Page"       width="300"/>
+  <img src="screenshots/create.png" alt="Create Listing"   width="300"/>
+  <img src="screenshots/list.png"   alt="Listing Page"     width="300"/>
+  <img src="screenshots/chat.png"   alt="Chatbot Support"  width="300"/>
+</div>
 
-### Create Listing
-![Create Listing](screenshots/create.png)
+## ✨ Features
 
-### About Page
-![About Page](screenshots/about.png)
+- 🔐 **User Auth** – Register, login, profile  
+- 🏘️ **Listings** – Create, edit, delete posts  
+- 🔍 **Search & Filter** – By location, price, type  
+- 💬 **Contact Owners** – In‑app messaging  
+- 🤖 **Chatbot** – Contextual Python support  
+- 📱 **Responsive** – Desktop & mobile ready  
 
-### Listing Page
-![Houses](screenshots/list.png)
+## 🚀 Quick Start
 
-## Folder Structure
-```
-real-estate/
-  ├── api/                # Backend (Node.js/Express)
-  │   ├── controllers/    # Route controllers
-  │   ├── models/         # Mongoose models
-  │   ├── routes/         # API routes
-  │   ├── utils/          # Utility functions
-  │   └── index.js        # API entry point
-  ├── client/             # Frontend (React)
-  │   ├── public/
-  │   └── src/
-  │       ├── components/ # Reusable components
-  │       ├── pages/      # Page components
-  │       ├── redux/      # Redux store and slices
-  │       └── firebase.js # Firebase config
-  ├── contextual-chatbot/ # Python chatbot service
-  └── uploads/            # Uploaded images/files
-```
+```bash
+# 1. Clone the repo
+git clone https://github.com/yourusername/RealEstateConnect.git
+cd RealEstateConnect
 
-## Setup Instructions
+# 2. Frontend (React)
+cd client
+npm install
+npm start &
 
-### Prerequisites
-- Node.js & npm
-- Python 3.x (for chatbot)
-- MongoDB (local or cloud)
+# 3. Backend (Node/Express)
+cd ../api
+npm install
+# create a .env file with MONGO_URI and JWT_SECRET
+npm start &
 
-### Backend (API)
-1. Navigate to the backend folder:
-   ```sh
-   cd real-estate/api
-   ```
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
-3. Set up environment variables (e.g., MongoDB URI, JWT secret) in a `.env` file.
-4. Start the server:
-   ```sh
-   npm start
-   ```
+# 4. Chatbot (Python/Flask)
+cd ../contextual-chatbot
+pip install -r requirements.txt
+python app.py
 
-### Frontend (Client)
-1. Navigate to the client folder:
-   ```sh
-   cd real-estate/client
-   ```
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
-3. Start the React app:
-   ```sh
-   npm start
-   ```
-
-### Chatbot Service
-1. Navigate to the chatbot folder:
-   ```sh
-   cd real-estate/contextual-chatbot
-   ```
-2. (Optional) Create and activate a virtual environment.
-3. Install dependencies:
-   ```sh
-   pip install -r requirements.txt
-   ```
-4. Start the chatbot API:
-   ```sh
-   python app.py
-   ```
-
-## Usage
-- Access the frontend at `http://localhost:3000` (default React port).
-- API runs on `http://localhost:5000` (or as configured).
-- Chatbot service runs on its own port (see `contextual-chatbot/app.py`).
-
-## Contributing
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-[MIT](LICENSE)
+# 5. Open the app
+# Frontend: http://localhost:3000
+# API:      http://localhost:5000
+# Chatbot: see port in app.py
